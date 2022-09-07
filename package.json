@@ -1,0 +1,19 @@
+{
+  "name": "blogserver",
+  "version": "1.0.0",
+  "description": "node+mongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BillyPhilosophy/blogServer.git"
+  },
+  "author": "dgc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BillyPhilosophy/blogServer/issues"
+  },
+  "homepage": "https://github.com/BillyPhilosophy/blogServer#readme"
+}
