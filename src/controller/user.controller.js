@@ -1,6 +1,7 @@
 const {createUser} = require('../service/users.service');
 
 class UserController {
+  // 异步不阻塞服务
   async register(ctx, next) {
     // 1.读取请求体
     // ctx.body = `Request Body: ${JSON.stringify(ctx.request.body)}`;
