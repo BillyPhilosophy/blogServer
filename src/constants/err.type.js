@@ -1,0 +1,19 @@
+module.exports={
+    userParamError(MSG){
+        return {
+            returnCode:10001,
+            returnMsg:MSG,
+            body:null  
+        }
+    },
+    userExistError:{
+        returnCode:10002,
+        returnMsg:'用户信息已存在',
+        body:null  
+    },
+    userRegisterError:{
+        returnCode:10003,
+        returnMsg:'用户注册时发生错误',
+        body:null 
+    }
+}
