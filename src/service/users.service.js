@@ -8,10 +8,10 @@ class UserService {
   async getUserInfo({...rest}){
     const whereOpt = {...rest};
     const res = await User.findOne({ 
-      attributes:['id','user_name'],
+      attributes:['id','user_name','password','is_admin'],
       where: whereOpt
     });
-    return res ? res.dataValues:null;
+    return res?.dataValues||null;
   }
 }
 
