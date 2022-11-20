@@ -1,6 +1,6 @@
 const { schemaRegister } = require("../validator/users.validator");
 const { getUserInfo } = require('../service/users.service');
-const { userParamError,userExistError,userRegisterError,userDoesNotExist,invalidPassword,userLoginError } = require('../constants/err.type')
+const { userParamError,userExistError,userRegisterError,userDoesNotExist,invalidPassword,userLoginError,pwdConsistencyError } = require('../constants/err.type')
 const bcrypt = require('bcryptjs');
 
 const userValidator = async (ctx, next) => {
@@ -44,7 +44,6 @@ const crpytPassword = async (ctx,next)=>{
 }
 
 // 登录校验
-
 const verifyLogin = async (ctx,next)=>{
   const { user_name, password } = ctx.request.body;
   // 合法性参数校验
@@ -58,15 +57,35 @@ const verifyLogin = async (ctx,next)=>{
     if(!bcrypt.compareSync(password, res.password)){
       return ctx.app.emit('error',invalidPassword,ctx);
     }
+    ctx.state.tokenPayload = res;//为生成token的payload而做准备
   } catch (error) {
     console.error(err)
     return ctx.app.emit('error', userLoginError, ctx)//登录异常报错
   }
   await next()
 }
+
+// 密码校验（两次密码相同则不调用）
+const verifyPwd = async (ctx,next)=>{
+  try {
+    const {password} = ctx.state.user;
+    const newPwd = ctx.request.body.password;
+    if(bcrypt.compareSync(newPwd, password)){
+      return ctx.app.emit('error',pwdConsistencyError,ctx)
+    }
+  } catch (error) {
+    console.log('error',error);
+  }
+  
+  await next();
+}
+
+
+
 module.exports = {
   userValidator,
   userExist,
   crpytPassword,
-  verifyLogin
+  verifyLogin,
+  verifyPwd
 }
