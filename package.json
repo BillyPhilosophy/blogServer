@@ -1,7 +1,7 @@
 {
   "name": "blogserver",
   "version": "1.0.0",
-  "description": "node+mongoDB",
+  "description": "node+MySQL",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
