@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/config.default');
 const { createUser,getUserInfo,updateById} = require('../service/users.service');
-const { userRegisterError, modifyPwdError } = require('../constants/err.type')
+const { userRegisterError, modifyPwdError } = require('../constants/err.type');
+// const {COOKIENAME} = require('../constants')
 
 
 class UserController {
@@ -33,6 +34,7 @@ class UserController {
     if(ctx.state?.tokenPayload){
       try {
         const tokenPayload = ctx.state.tokenPayload;
+        // ctx.cookies.set(COOKIENAME,jwt.sign(tokenPayload,JWT_SECRET,{expiresIn:'1d'}));//todo搞成setcookie校验cookie
         ctx.body = {
           returnCode:0,
           returnMsg:`登录成功,欢迎${user_name}再次回到秘密基地！`,

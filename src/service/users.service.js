@@ -1,4 +1,3 @@
-const { use } = require('../app');
 const User = require('../model/user.model');
 class UserService {
   // 创建用户
@@ -16,7 +15,7 @@ class UserService {
     });
     return res?.dataValues||null;
   }
-  // 根据ID修改yion
+  // 根据ID修改用户信息的通用接口
   async updateById(id,{...rest}){
     const whereOpt = {id};
     const updateOpt = rest;
