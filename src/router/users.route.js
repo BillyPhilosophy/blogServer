@@ -9,7 +9,9 @@ const { register, login, modifyUserPwd } = require("../controller/user.controlle
 
 // 注册接口
 userRoute.post("/register", userValidator, userExist, crpytPassword, register);
+// 登录接口
 userRoute.post("/login", userValidator, verifyLogin, login);
+// 修改接口
 userRoute.patch("/", auth, verifyPwd , crpytPassword, modifyUserPwd);
 
 module.exports = userRoute;
