@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=dev nodemon ./src/main.js",
-    "production": "cross-env NODE_ENV=production nodemon ./src/main.js"
+    "production": "cross-env NODE_ENV=production ./src/main.js"
   },
   "repository": {
     "type": "git",
