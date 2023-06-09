@@ -13,5 +13,6 @@ userRoute.post("/register", userValidator, userExist, crpytPassword, register);
 userRoute.post("/login", userValidator, verifyLogin, login);
 // 修改接口
 userRoute.patch("/", auth, verifyPwd , crpytPassword, modifyUserPwd);
-
+// 查询接口
+userRoute.get("/info", auth);
 module.exports = userRoute;

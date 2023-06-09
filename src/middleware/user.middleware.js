@@ -1,5 +1,5 @@
 const { schemaRegister } = require("../validator/users.validator");
-const { getUserInfo } = require('../service/users.service');
+const { getUserInfoBase } = require('../service/users.service');
 const { userParamError,userExistError,userRegisterError,userDoesNotExist,invalidPassword,userLoginError,pwdConsistencyError } = require('../constants/err.type')
 const bcrypt = require('bcryptjs');
 
@@ -22,7 +22,7 @@ const userValidator = async (ctx, next) => {
 const userExist = async (ctx,next)=>{//校验用户是否已存在
   const { user_name } = ctx.request.body;
   try {
-    const res = await getUserInfo({user_name});
+    const res = await getUserInfoBase({user_name});
     if(res){
       return ctx.app.emit('error',userExistError,ctx);
     }
@@ -48,7 +48,7 @@ const verifyLogin = async (ctx,next)=>{
   const { user_name, password } = ctx.request.body;
   // 合法性参数校验
   try {
-    const res = await getUserInfo({user_name});
+    const res = await getUserInfoBase({user_name});
     if(!res){
       console.error('用户名不存在', { user_name });
       return ctx.app.emit('error',userDoesNotExist,ctx);
@@ -79,6 +79,8 @@ const verifyPwd = async (ctx,next)=>{
   
   await next();
 }
+
+// 获取用户简单信息
 
 
 

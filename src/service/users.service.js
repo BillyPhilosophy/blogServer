@@ -6,11 +6,11 @@ class UserService {
     const res = await User.create({ user_name,password });
     return res.dataValues
   }
-  // 获取用户
-  async getUserInfo({...rest}){
+  // 获取用户基础信息
+  async getUserInfoBase({...rest}){
     const whereOpt = {...rest};
     const res = await User.findOne({ 
-      attributes:['id','user_name','password','is_admin'],
+      attributes:['id','user_name','password','role'],
       where: whereOpt
     });
     return res?.dataValues||null;
