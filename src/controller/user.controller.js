@@ -6,7 +6,7 @@ const { userRegisterError, modifyPwdError } = require('../constants/err.type');
 
 
 class UserController {
-  // 异步不阻塞服务
+  // 注册
   async register(ctx, next) {
     // 1.读取请求体
     const {user_name,password} = ctx.request.body;
@@ -29,6 +29,7 @@ class UserController {
     }
     
   }
+  // 登录
   async login(ctx, next) {
     const {user_name} = ctx.request.body;
     // 如果从上一个中间件带下来了参数
@@ -63,6 +64,7 @@ class UserController {
       }
     }
   }
+  // 修改密码
   async modifyUserPwd(ctx, next){
     const id = ctx.state.user.id;
     const {password} = ctx.request.body;
@@ -76,6 +78,9 @@ class UserController {
       return ctx.app.emit('error',modifyPwdError,ctx);
     }
   }
+  // 获取用户简单信息
+
+  // 获取用户全面信息
 }
 
 module.exports = new UserController();
