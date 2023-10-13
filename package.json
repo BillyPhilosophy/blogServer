@@ -4,7 +4,7 @@
   "description": "node+MySQL",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./src/main.js",
+    "start": "cross-env NODE_ENV=dev nodemon ./src/main.js",
     "dev": "cross-env NODE_ENV=dev nodemon ./src/main.js",
     "production": "cross-env NODE_ENV=production node ./src/main.js"
   },

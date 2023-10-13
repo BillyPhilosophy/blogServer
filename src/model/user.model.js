@@ -62,26 +62,10 @@ const seq = require('../db/seq');
 // const User = new MyUser();
 const User = seq.define('blog_user', {
     // 在这里定义模型属性
-    // id是自动维护的自增
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        unique: true,
-        min: 1000000000,
-        max: 9999999999
+    userNo: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV1
     },
-    // userId: {
-    //     type: DataTypes.INTEGER,
-    //     primaryKey: true,
-    //     autoIncrement: true,
-    //     allowNull: false,
-    //     unique: true,
-    //     min: 1000000000,
-    //     max: 9999999999,
-    //     field: 'id' // 数据库中的列名
-    // },
     user_name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -90,7 +74,8 @@ const User = seq.define('blog_user', {
     },
     nick_name:{
         type: DataTypes.STRING,
-        comment:'昵称（可以为空可以后期更改）'
+        comment:'昵称（可以为空可以后期更改）',
+        defaultValue:`大佬${new Date().getTime()+Math.floor(Math.random()*1000)}`
     },
     password: {
         type: DataTypes.CHAR(64),
@@ -98,10 +83,10 @@ const User = seq.define('blog_user', {
         comment: '密码'
     },
     role: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.NUMBER,
         allowNull: false,
         defaultValue: 0,
-        comment: '是否为管理员, 0: 不是管理员(默认); 1: 是管理员',
+        comment: '是否为管理员, 0: 不是管理员(默认); 1: 是管理员;8: root管理员',
     },
     introduce:{
         type:DataTypes.STRING(512),
