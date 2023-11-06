@@ -4,6 +4,7 @@ const { userParamError,userExistError,userRegisterError,userDoesNotExist,invalid
 const bcrypt = require('bcryptjs');
 
 const userValidator = async (ctx, next) => {
+  console.log( 'ctx.request===',ctx.request);
   const { user_name, password } = ctx.request.body;
   // 合法性参数校验
   try {
