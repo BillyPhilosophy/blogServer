@@ -1,5 +1,5 @@
 module.exports = (err, ctx) => {
-	let status = 500;
+	let status = 200;
 	switch (err.returnCode) {
 		case 10001:
 			status = 400;
@@ -11,7 +11,7 @@ module.exports = (err, ctx) => {
 			status = 400;
 			break;
 		default:
-			status = 500;
+			status = 200;
 	}
 	ctx.status = status;
 	ctx.body = err;

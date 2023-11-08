@@ -6,11 +6,20 @@ class UserService {
     const res = await User.create({ user_name,password });
     return res.dataValues
   }
-  // 获取用户基础信息
-  async getUserInfoBase({...rest}){
-    const whereOpt = {...rest};
+  // 获取用户基础隐私信息
+  async getUserPrivacyInfo({...rest}){
+    const whereOpt = rest;
     const res = await User.findOne({ 
-      attributes:['id','user_name','password','role'],
+      attributes:['id','user_name','nick_name','password','role'],
+      where: whereOpt
+    });
+    return res?.dataValues||null;
+  }
+  // 获取用户信息
+  async getUserInfo({...rest},attributes){
+    const whereOpt = rest;
+    const res = await User.findOne({ 
+      attributes,
       where: whereOpt
     });
     return res?.dataValues||null;

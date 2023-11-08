@@ -11,7 +11,6 @@ const auth = async (ctx,next)=>{
     const user = jwt.verify(token, JWT_SECRET);
     ctx.state.user = user;
   } catch (error) {
-    console.error(error);
     switch(error.name){
       case 'TokenExpiredError':
         return ctx.app.emit('error',tokenExpiredError,ctx);

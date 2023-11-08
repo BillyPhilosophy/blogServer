@@ -41,6 +41,11 @@ module.exports={
         returnMsg: '修改密码失败',
         body: null,
     },
+    getUserInfoError:{
+        returnCode: 10009,
+        returnMsg: '查询用户信息失败',
+        body: null,
+    },
     // 鉴权部分的erro
     tokenExpiredError:{
         returnCode: 10101,

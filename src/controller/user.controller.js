@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/config.default');
-const { createUser,getUserInfoBase,updateById} = require('../service/users.service');
-const { userRegisterError, modifyPwdError } = require('../constants/err.type');
+const { createUser,getUserPrivacyInfo,updateById,getUserInfo} = require('../service/users.service');
+const { userRegisterError, modifyPwdError,getUserInfoError } = require('../constants/err.type');
 // const {COOKIENAME} = require('../constants')
 
 
@@ -50,7 +50,7 @@ class UserController {
       }
     }else{//意外丢失了就再获取一次
       try {
-        const tokenPayload = await getUserInfoBase({user_name});
+        const tokenPayload = await getUserPrivacyInfo({user_name});
         ctx.body = {
           returnCode:0,
           returnMsg:`登录成功,欢迎${user_name}再次回到秘密基地！`,
@@ -79,7 +79,20 @@ class UserController {
     }
   }
   // 获取用户简单信息
-
+  async getUserSimpleInfo(ctx, next){
+    const id = ctx.state.user.id;
+    // 基础信息包括用户名，昵称，
+    const res = await getUserInfo({id},['user_name','nick_name','userNo','role'])
+    if(res){
+      return ctx.body = {
+        returnCode:0,
+        returnMsg:'查询成功',
+        body:res
+      };
+    }else{
+      return ctx.app.emit('error',getUserInfoError,ctx);
+    }
+  }
   // 获取用户全面信息
 }
 
