@@ -75,7 +75,7 @@ const verifyPwd = async (ctx,next)=>{
       return ctx.app.emit('error',pwdConsistencyError,ctx)
     }
   } catch (error) {
-    console.log('error',error);
+    return ctx.app.emit('error',userParamError(error),ctx);
   }
   
   await next();

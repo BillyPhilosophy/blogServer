@@ -5,7 +5,7 @@ const userRoute = new Route({ prefix: "/users" });
 const { userValidator, userExist, crpytPassword, verifyLogin, verifyPwd } = require("../middleware/user.middleware");
 const { auth } = require("../middleware/auth.middleware");
 
-const { register, login, modifyUserPwd,getUserSimpleInfo } = require("../controller/user.controller"); //将业务逻辑抽取到controller
+const { register, login, modifyUserPwd, getUserSimpleInfo, getUserAllInfo } = require("../controller/user.controller"); //将业务逻辑抽取到controller
 // 定义用户模型组
 /**
 * @swagger
@@ -148,5 +148,7 @@ userRoute.post("/login", userValidator, verifyLogin, login);
 */
 userRoute.patch("/modifyUserPwd", auth, verifyPwd, crpytPassword, modifyUserPwd);
 // 查询用户基础信息接口
-userRoute.get("/baseInfo", auth,getUserSimpleInfo);
+userRoute.get("/baseInfo", auth, getUserSimpleInfo);
+// 查询用户全部信息/除隐私信息
+userRoute.get("/allInfo", auth, getUserAllInfo); 
 module.exports = userRoute;

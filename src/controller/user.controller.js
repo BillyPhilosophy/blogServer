@@ -94,6 +94,20 @@ class UserController {
     }
   }
   // 获取用户全面信息
+  async getUserAllInfo(ctx, next){
+    const id = ctx.state.user.id;
+    // 基础信息包括用户名，昵称，
+    const res = await getUserInfo({id},['userNo','user_name','nick_name','role','introduce','banner','gender','email','date'])
+    if(res){
+      return ctx.body = {
+        returnCode:0,
+        returnMsg:'查询成功',
+        body:res
+      };
+    }else{
+      return ctx.app.emit('error',getUserInfoError,ctx);
+    }
+  }
 }
 
 module.exports = new UserController();
