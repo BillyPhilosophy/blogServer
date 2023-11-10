@@ -19,7 +19,7 @@ router.get(
       },
   })
 );
-
+console.log(JSON.stringify(swaggerSpec, null, 2));
 
 const errHandler = require('./errHandler')
 

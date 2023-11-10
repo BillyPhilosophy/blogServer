@@ -1,17 +1,17 @@
 const Route = require("koa-router");
-
 const userRoute = new Route({ prefix: "/users" });
 
 const { userValidator, userExist, crpytPassword, verifyLogin, verifyPwd } = require("../middleware/user.middleware");
 const { auth } = require("../middleware/auth.middleware");
 
 const { register, login, modifyUserPwd, getUserSimpleInfo, getUserAllInfo } = require("../controller/user.controller"); //将业务逻辑抽取到controller
+
 // 定义用户模型组
 /**
 * @swagger
 * tags:
 *   name: Users
-*   description: User management
+*   description: 用户相关模块
 */
 
 
@@ -102,24 +102,13 @@ userRoute.post("/register", userValidator, userExist, crpytPassword, register);
 userRoute.post("/login", userValidator, verifyLogin, login);
 
 // 修改密码接口
-/**
-* @swagger
-* components:
-*   schemas:
-*     ModifyUserPwd:
-*       type: object
-*       properties:
-*         password:
-*           type: string
-*           description: pwd.
-*       required:
-*         - password
-*/
 
 /**
 * @swagger
 * /modifyUserPwd:
 *   patch:
+*     security:
+*       - bearerAuth: []
 *     summary: 修改密码
 *     servers:
 *       - url: '/users'
@@ -129,26 +118,108 @@ userRoute.post("/login", userValidator, verifyLogin, login);
 *         application/json:
 *           schema:
 *             $ref: '#/components/schemas/ModifyUserPwd'
-*     parameters:
-*       - in: header
-*         name: Authorization
-*         required: true
-*         description: Bearer Token for authentication
-*         schema:
-*            type: string
+*     responses:
+*       200:
+*         description: 修改成功.
+*/
+userRoute.patch("/modifyUserPwd", auth, verifyPwd, crpytPassword, modifyUserPwd);
+
+// 查询用户基础信息接口
+/**
+* @swagger
+* components:
+*   schemas:
+*     BaseInfo:
+*       type: object
+*       properties:
+*         user_name:
+*           type: string
+*           description: 用户名
+*         nick_name:
+*           type: string
+*           description: 昵称
+*         userNo:
+*           type: string
+*           description: 编号
+*         role:
+*           type: number
+*           description: 角色
+*/
+/**
+* @swagger
+* /baseInfo:
+*   get:
+*     security:
+*       - bearerAuth: []
+*     summary: 查询用户基础信息接口
+*     servers:
+*       - url: '/users'
+*     tags: [Users]
 *     responses:
 *       200:
 *         description: A list of users.
 *         content:
 *           application/json:
 *             schema:
-*               type: array
-*               items:
-*                 $ref: '#/components/schemas/ModifyUserPwd'
+*               type: object
+*               $ref: '#/components/schemas/BaseInfo'
 */
-userRoute.patch("/modifyUserPwd", auth, verifyPwd, crpytPassword, modifyUserPwd);
-// 查询用户基础信息接口
 userRoute.get("/baseInfo", auth, getUserSimpleInfo);
+
 // 查询用户全部信息/除隐私信息
+/**
+* @swagger
+* components:
+*   schemas:
+*     AllInfo:
+*       type: object
+*       properties:
+*         user_name:
+*           type: string
+*           description: 用户名
+*         nick_name:
+*           type: string
+*           description: 昵称
+*         userNo:
+*           type: string
+*           description: 编号
+*         role:
+*           type: number
+*           description: 角色
+*         introduce:
+*           type: string
+*           description: 简介
+*         banner:
+*           type: string
+*           description: 用户自定义banner图
+*         gender:
+*           type: string
+*           description: 性别
+*         email:
+*           type: string
+*           description: 邮箱
+*         date:
+*           type: string
+*           description: 生日(yyyymmdd)
+*/
+/**
+* @swagger
+* /allInfo:
+*   get:
+*     security:
+*       - bearerAuth: []
+*     summary: 查询用户全部信息/除隐私信息
+*     servers:
+*       - url: '/users'
+*     tags: [Users]
+*     responses:
+*       200:
+*         description: 返回相关用户的全部信息
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               $ref: '#/components/schemas/AllInfo'
+*/
 userRoute.get("/allInfo", auth, getUserAllInfo); 
 module.exports = userRoute;

@@ -16,10 +16,19 @@ const options = {
             {
                 url: '/other',
                 description: '其他',
-            },
+            }
         ],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT', // 设置授权格式，例如 JWT
+                },
+            }
+        }
     },
-    apis: ['./src/router/*.js'],
+    apis: ['./src/router/*.js']
 };
 
 const swaggerSpec = swaggerJSDoc(options);
