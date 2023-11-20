@@ -2,6 +2,8 @@ const { schemaRegister } = require("../validator/users.validator");
 const { getUserPrivacyInfo } = require('../service/users.service');
 const { userParamError,userExistError,userRegisterError,userDoesNotExist,invalidPassword,userLoginError,pwdConsistencyError } = require('../constants/err.type')
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = require('../config/config.default');
 
 const userValidator = async (ctx, next) => {
   console.log( 'ctx.request===',ctx.request);
@@ -81,6 +83,16 @@ const verifyPwd = async (ctx,next)=>{
   await next();
 }
 
+// 刷新token
+const tokenRefersh = async (ctx,next)=>{
+  // 重新签token
+  jwt.sign(ctx.state.user,JWT_SECRET,{expiresIn:'1d'})
+  return ctx.body = {
+    returnCode:0,
+    returnMsg:'请重新登录！',
+    body:null
+  };
+}
 
 
 
@@ -90,5 +102,6 @@ module.exports = {
   userExist,
   crpytPassword,
   verifyLogin,
-  verifyPwd
+  verifyPwd,
+  tokenRefersh
 }

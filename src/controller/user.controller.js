@@ -69,11 +69,9 @@ class UserController {
     const id = ctx.state.user.id;
     const {password} = ctx.request.body;
     if(await updateById(id,{password})){
-      return ctx.body = {
-        returnCode:0,
-        returnMsg:'修改成功！',
-        body:null
-      };
+      ctx.state.user.password = password;
+      await next();
+     
     }else{
       return ctx.app.emit('error',modifyPwdError,ctx);
     }

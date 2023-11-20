@@ -1,7 +1,7 @@
 const Route = require("koa-router");
 const userRoute = new Route({ prefix: "/users" });
 
-const { userValidator, userExist, crpytPassword, verifyLogin, verifyPwd } = require("../middleware/user.middleware");
+const { userValidator, userExist, crpytPassword, verifyLogin, verifyPwd, tokenRefersh } = require("../middleware/user.middleware");
 const { auth } = require("../middleware/auth.middleware");
 
 const { register, login, modifyUserPwd, getUserSimpleInfo, getUserAllInfo } = require("../controller/user.controller"); //将业务逻辑抽取到controller
@@ -13,7 +13,6 @@ const { register, login, modifyUserPwd, getUserSimpleInfo, getUserAllInfo } = re
 *   name: Users
 *   description: 用户相关模块
 */
-
 
 // 注册接口
 /**
@@ -102,7 +101,6 @@ userRoute.post("/register", userValidator, userExist, crpytPassword, register);
 userRoute.post("/login", userValidator, verifyLogin, login);
 
 // 修改密码接口
-
 /**
 * @swagger
 * /modifyUserPwd:
@@ -122,7 +120,7 @@ userRoute.post("/login", userValidator, verifyLogin, login);
 *       200:
 *         description: 修改成功.
 */
-userRoute.patch("/modifyUserPwd", auth, verifyPwd, crpytPassword, modifyUserPwd);
+userRoute.patch("/modifyUserPwd", auth, verifyPwd, crpytPassword, modifyUserPwd, tokenRefersh);
 
 // 查询用户基础信息接口
 /**
