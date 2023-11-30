@@ -1,4 +1,4 @@
-const { DataTypes, Model } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 const seq = require('../db/seq');
 
@@ -19,16 +19,20 @@ const User = seq.define('blog_user', {
         comment:'昵称（可以为空可以后期更改）',
         defaultValue:`大佬${new Date().getTime()+Math.floor(Math.random()*1000)}`
     },
+    avatar:{
+        type: DataTypes.STRING,
+        comment:'用户头像地址',
+    },
     password: {
         type: DataTypes.CHAR(64),
         allowNull: false,
         comment: '密码'
     },
     role: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
-        comment: '是否为管理员, 0: 不是管理员(默认); 1: 是管理员;8: root管理员',
+        comment: '是否为管理员 0: 不是管理员(默认) 1: 是管理员 8: root管理员',
     },
     introduce:{
         type:DataTypes.STRING(512),

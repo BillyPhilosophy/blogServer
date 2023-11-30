@@ -130,18 +130,24 @@ userRoute.patch("/modifyUserPwd", auth, verifyPwd, crpytPassword, modifyUserPwd,
 *     BaseInfo:
 *       type: object
 *       properties:
+*         userNo:
+*           type: string
+*           description: 用户编号
+*         avatar:
+*           type: string
+*           description: 用户头像
 *         user_name:
 *           type: string
 *           description: 用户名
 *         nick_name:
 *           type: string
 *           description: 昵称
-*         userNo:
-*           type: string
-*           description: 编号
 *         role:
-*           type: number
+*           type: Integer
 *           description: 角色
+*         introduce:
+*           type: string
+*           description: 个人简介
 */
 /**
 * @swagger
@@ -172,21 +178,24 @@ userRoute.get("/baseInfo", auth, getUserSimpleInfo);
 *     AllInfo:
 *       type: object
 *       properties:
+*         userNo:
+*           type: string
+*           description: 用户编号
+*         avatar:
+*           type: string
+*           description: 用户头像
 *         user_name:
 *           type: string
 *           description: 用户名
 *         nick_name:
 *           type: string
 *           description: 昵称
-*         userNo:
-*           type: string
-*           description: 编号
 *         role:
-*           type: number
+*           type: Integer
 *           description: 角色
 *         introduce:
 *           type: string
-*           description: 简介
+*           description: 个人简介
 *         banner:
 *           type: string
 *           description: 用户自定义banner图

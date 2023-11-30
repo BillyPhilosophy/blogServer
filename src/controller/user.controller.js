@@ -80,7 +80,7 @@ class UserController {
   async getUserSimpleInfo(ctx, next){
     const id = ctx.state.user.id;
     // 基础信息包括用户名，昵称，
-    const res = await getUserInfo({id},['user_name','nick_name','userNo','role'])
+    const res = await getUserInfo({id},['avatar','userNo','user_name','nick_name','role','introduce'])
     if(res){
       return ctx.body = {
         returnCode:0,
@@ -95,7 +95,7 @@ class UserController {
   async getUserAllInfo(ctx, next){
     const id = ctx.state.user.id;
     // 基础信息包括用户名，昵称，
-    const res = await getUserInfo({id},['userNo','user_name','nick_name','role','introduce','banner','gender','email','date'])
+    const res = await getUserInfo({id},['avatar','userNo','user_name','nick_name','role','introduce','banner','gender','email','date'])
     if(res){
       return ctx.body = {
         returnCode:0,
