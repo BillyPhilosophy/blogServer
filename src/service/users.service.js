@@ -10,7 +10,7 @@ class UserService {
   async getUserPrivacyInfo({...rest}){
     const whereOpt = rest;
     const res = await User.findOne({ 
-      attributes:['id','user_name','nick_name','password','role'],
+      attributes:['id','username','nickname','password','role'],
       where: whereOpt
     });
     return res?.dataValues||null;

@@ -136,10 +136,10 @@ userRoute.patch("/modifyUserPwd", auth, verifyPwd, crpytPassword, modifyUserPwd,
 *         avatar:
 *           type: string
 *           description: 用户头像
-*         user_name:
+*         username:
 *           type: string
 *           description: 用户名
-*         nick_name:
+*         nickname:
 *           type: string
 *           description: 昵称
 *         role:
@@ -184,10 +184,10 @@ userRoute.get("/baseInfo", auth, getUserSimpleInfo);
 *         avatar:
 *           type: string
 *           description: 用户头像
-*         user_name:
+*         username:
 *           type: string
 *           description: 用户名
-*         nick_name:
+*         nickname:
 *           type: string
 *           description: 昵称
 *         role:

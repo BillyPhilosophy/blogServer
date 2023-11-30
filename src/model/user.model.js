@@ -8,13 +8,13 @@ const User = seq.define('blog_user', {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV1
     },
-    user_name: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
       unique:true,
       comment:'用户名，唯一值'
     },
-    nick_name:{
+    nickname:{
         type: DataTypes.STRING,
         comment:'昵称（可以为空可以后期更改）',
         defaultValue:`大佬${new Date().getTime()+Math.floor(Math.random()*1000)}`
