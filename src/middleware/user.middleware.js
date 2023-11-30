@@ -7,12 +7,12 @@ const { JWT_SECRET } = require('../config/config.default');
 
 const userValidator = async (ctx, next) => {
   console.log( 'ctx.request===',ctx.request);
-  const { user_name, password } = ctx.request.body;
+  const { username, password } = ctx.request.body;
   // 合法性参数校验
   try {
-    await schemaRegister.validateAsync({ user_name, password });
+    await schemaRegister.validateAsync({ username, password });
   } catch (error) {
-    console.error('用户名或密码不符合校验', { user_name, password });
+    console.error('用户名或密码不符合校验', { username, password });
     const MSG = error.details.reduce(
       (prev, cur) => prev + cur.message + "  ",
       ""
@@ -23,9 +23,9 @@ const userValidator = async (ctx, next) => {
 };
 
 const userExist = async (ctx,next)=>{//校验用户是否已存在
-  const { user_name } = ctx.request.body;
+  const { username } = ctx.request.body;
   try {
-    const res = await getUserPrivacyInfo({user_name});
+    const res = await getUserPrivacyInfo({username});
     if(res){
       return ctx.app.emit('error',userExistError,ctx);
     }
@@ -48,12 +48,12 @@ const crpytPassword = async (ctx,next)=>{
 
 // 登录校验
 const verifyLogin = async (ctx,next)=>{
-  const { user_name, password } = ctx.request.body;
+  const { username, password } = ctx.request.body;
   // 合法性参数校验
   try {
-    const res = await getUserPrivacyInfo({user_name});
+    const res = await getUserPrivacyInfo({username});
     if(!res){
-      console.error('用户名不存在', { user_name });
+      console.error('用户名不存在', { username });
       return ctx.app.emit('error',userDoesNotExist,ctx);
     }
     // 密码校验

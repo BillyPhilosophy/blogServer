@@ -22,14 +22,14 @@ const { register, login, modifyUserPwd, getUserSimpleInfo, getUserAllInfo } = re
 *     Register:
 *       type: object
 *       properties:
-*         user_name:
+*         username:
 *           type: string
 *           description: uname.
 *         password:
 *           type: string
 *           description: pwd.
 *       required:
-*         - user_name
+*         - username
 *         - password
 */
 /**
@@ -65,14 +65,14 @@ userRoute.post("/register", userValidator, userExist, crpytPassword, register);
 *     Login:
 *       type: object
 *       properties:
-*         user_name:
+*         username:
 *           type: string
 *           description: uname.
 *         password:
 *           type: string
 *           description: pwd.
 *       required:
-*         - user_name
+*         - username
 *         - password
 */
 /**

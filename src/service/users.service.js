@@ -1,9 +1,9 @@
 const User = require('../model/user.model');
 class UserService {
   // 创建用户
-  async createUser(user_name,password) {
+  async createUser(username,password) {
     //写入数据库
-    const res = await User.create({ user_name,password });
+    const res = await User.create({ username,password });
     return res.dataValues
   }
   // 获取用户基础隐私信息
