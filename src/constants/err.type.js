@@ -47,6 +47,11 @@ module.exports={
         body: null,
     },
     // 鉴权部分的erro
+    tokenNonExisError:{
+        returnCode: 10100,
+        returnMsg: '请登陆后重试',
+        body: null,
+    },
     tokenExpiredError:{
         returnCode: 10101,
         returnMsg: 'token已过期',

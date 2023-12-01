@@ -1,26 +1,26 @@
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../config/config.default')
 
-const {tokenExpiredError,jsonWebTokenError,notBeforeError} = require('../constants/err.type')
+const {tokenExpiredError,jsonWebTokenError,notBeforeError,tokenNonExisError} = require('../constants/err.type')
 
 
 const auth = async (ctx,next)=>{
-  const {authorization} = ctx.request.header;
-  const token = authorization.replace('Bearer ','');
   try {
+    const {authorization} = ctx.request.header;
+    const token = authorization.replace('Bearer ','');
     const user = jwt.verify(token, JWT_SECRET);
     ctx.state.user = user;
+    await next();
   } catch (error) {
-    switch(error.name){
-      case 'TokenExpiredError':
-        return ctx.app.emit('error',tokenExpiredError,ctx);
-      case 'JsonWebTokenError':
-        return ctx.app.emit('error',jsonWebTokenError,ctx);  
-      case 'NotBeforeError':
-        return ctx.app.emit('error',notBeforeError,ctx);  
-    }
+    const errorMap = {
+      TokenExpiredError: tokenExpiredError,
+      JsonWebTokenError: jsonWebTokenError,
+      NotBeforeError: notBeforeError,
+      default: tokenNonExisError,
+    };
+    const chosenError = errorMap[error.name] || errorMap.default;
+    ctx.app.emit('error', chosenError, ctx);
   }
-  await next()
 }
 
 module.exports = {
