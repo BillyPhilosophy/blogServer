@@ -23,6 +23,10 @@ const auth = async (ctx,next)=>{
   }
 }
 
+const tokenGenerator = async () => {
+
+}
+
 module.exports = {
   auth
 }

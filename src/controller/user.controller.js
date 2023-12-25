@@ -9,10 +9,15 @@ class UserController {
   // 注册
   async register(ctx, next) {
     // 1.读取请求体
-    const {username,password} = ctx.request.body;
+    const {username,password,nickname} = ctx.request.body;
     // 2.写入数据库
     try {
-      const res = await createUser(username,password);
+      const res = await createUser(username,password,nickname);
+      const tokenPayload = {
+        id:res.id,
+        username:res.username,
+        nickname:res.nickname,
+      };
       console.log('res=====',res);
       // 3.返回
       ctx.body = {
@@ -20,7 +25,9 @@ class UserController {
         returnMsg:'注册成功！',
         body:{
           id:res.id,
-          username:res.username
+          username:res.username,
+          nickname:res.nickname,
+          token:jwt.sign(tokenPayload,JWT_SECRET,{expiresIn:'1d'})
         }
       };
     } catch (error) {
